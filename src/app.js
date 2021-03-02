@@ -4,20 +4,31 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+// require CLIENT_ORIGIN
+
+// require routers
+const showsRouter = require('./endpoint_shows/shows-router');
+const usersRouter = require('./endpoint_users/users-router');
+const authRouter = require('./endpoint_auth/auth-router');
 
 const app = express();
 
 const morganOption = (NODE_ENV === 'production')
     ? 'tiny'
-    : 'common' ;
+    : 'dev' ;
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Hello, you!');
+app.get('/api/', (req, res) => {
+    res.send(`Hello, What's Next? user!`);
 })
+
+// app.use routers
+app.use('/api/shows', showsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
 
 app.use((error, req, res, next) => {
     let response

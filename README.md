@@ -1,26 +1,22 @@
-# Express Boilerplate!
+# Whats's Next? API
 
-This is a boilerplate project used for starting new projects!
+## General Description
+This Express server serves as the API for the What's Next? React app, linking that app to a PostgreSQL database. You can find the Vercel-hosted app [here](https://whats-next-five.vercel.app/) and the app's GitHub repo [here](https://github.com/sam1cutler/WhatsNext). 
 
-## Set up
+## Summary
+This API includes 3 main endpoints: `/shows`, `/users`, and `/auth`. The latter two are responsible for maintaining and authenticating registered users of the app, respectively, and the `/shows` endpoint is responsible for the core functionality of the app. Users create lists of shows that they WANT to watch in the future and shows they HAVE ALREADY finished watching, as well as maintaining "friend" connections to other What's Next? users. The following information about shows can be saved:
+- Show name
+- Streaming service on which the show is available
+- Show genre
+- "Priority" rank (specific for shows on a user's "to-watch" list)
+- Date completed (specific for shows on a user's "watched" list)
+- Rating out of 5 stars (specific for shows on a user's "watched" list)
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Technology used
+Express, PostgreSQL, Heroku, Morgan, Helmet. 
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies with `npm i`
-5. Move the example Environment file to `.env` (that will be ignored by git and read by the express server) with `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+## Contact me
+You can find [my GitHub page here](https://github.com/sam1cutler).
 
-## Scripts
-
-Start the application: `npm start`
-
-Start nodemon for the application: `npm run dev`
-
-Run the tests: `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+## Acknowledgements
+This project is part of an assignment for the Thinkful software engineering program. 
