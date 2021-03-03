@@ -45,6 +45,13 @@ const showsService = {
             })
     },
 
+    deleteShow(knex, id) {
+        return knex
+            .from('whats_next_shows')
+            .where( {id} )
+            .delete()
+    },
+
 
 }
 

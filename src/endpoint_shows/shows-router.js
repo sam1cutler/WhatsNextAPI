@@ -115,9 +115,32 @@ showsRouter
                         error: {message: `The show with ID '${req.params.showId}' could not be found.`}
                     })
             }
+
+
+            // check that the show (which exists) is "owned" by 
+            //    the specific authToken-verified user making this request
+            if (show.user_id !== req.user.id) {
+                return res
+                    .status(404)
+                    .json({
+                        error: { message: `The user making this request about show #${req.params.showId} is not authorized to do so.`}
+                    })
+            }
+
             res.show = show;
             next()
         })
+    })
+    .delete( (req, res, next) => {
+        showsService.deleteShow(
+            req.app.get('db'),
+            req.params.showId
+        )
+            .then( () => {
+                res
+                    .status(204)
+                    .end()
+            })
     })
     
 

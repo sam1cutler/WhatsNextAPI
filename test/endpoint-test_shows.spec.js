@@ -33,7 +33,7 @@ describe('Shows Endpoints', function() {
                     .into('whats_next_users')
                     .insert(testUsers)
             })
-            beforeEach('insert hikes', () => {
+            beforeEach('insert shows', () => {
                 return db
                     .into('whats_next_shows')
                     .insert(testShows)
@@ -63,7 +63,7 @@ describe('Shows Endpoints', function() {
                     .into('whats_next_users')
                     .insert(testUsers)
             })
-            beforeEach('insert hikes', () => {
+            beforeEach('insert shows', () => {
                 return db
                     .into('whats_next_shows')
                     .insert(testShows)
@@ -121,7 +121,7 @@ describe('Shows Endpoints', function() {
                     .into('whats_next_users')
                     .insert(testUsers)
             })
-            beforeEach('insert hikes', () => {
+            beforeEach('insert shows', () => {
                 return db
                     .into('whats_next_shows')
                     .insert(testShows)
@@ -138,6 +138,68 @@ describe('Shows Endpoints', function() {
                     //.set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShow)
             });
+
+        })
+    })
+
+    describe.skip(`4) DELETE /api/shows/:showId`, () => {
+        context(`A) Given shows in the database`, () => {
+            beforeEach('insert users', () => {
+                return db
+                    .into('whats_next_users')
+                    .insert(testUsers)
+            })
+            beforeEach('insert shows', () => {
+                return db
+                    .into('whats_next_shows')
+                    .insert(testShows)
+                    /*
+                    // reset seq counter to latest PK number
+                    .then( () => {
+                        return db.max('id').from('whats_next_shows')
+                    })
+                    .then( (maxId) => {
+                        return db.raw(
+                            `ALTER SEQUENCE 
+                                whats_next_shows_id_seq 
+                                RESTART WITH ${maxId[0].max+1};
+                            `
+                        )
+                    })
+                    */
+            })
+
+            it(`i) responds with 204 and deletes the requested show`, () => {
+                const activeUser = testUsers[0];
+                const deleteShowTargetId = 2;
+                const authToken = helpers.makeAuthToken(activeUser);
+
+                const expectedShows1 = testShows.filter(show => 
+                    show.user_id === activeUser.id
+                );
+                const expectedShows2 = expectedShows1.filter(show => 
+                    show.id !== deleteShowTargetId
+                );
+                const expectedShows = expectedShows2.map(show => 
+                    helpers.serializeShowData(show)
+                );
+                
+                return supertest(app)
+                    .delete(`/api/shows/${deleteShowTargetId}`)
+                    .set('Authorization', `bearer ${authToken}`)
+                    .expect(204)
+                    .then( () => {
+                        return supertest(app)
+                            .get(`/api/shows/1`)
+                            // PICK BACK UP HERE
+                    })
+                    /*
+                    .expect(res => {
+                        expect(res.body.title).to.eql(newShow.title)
+                    })
+                    */
+            })
+
 
         })
     })
