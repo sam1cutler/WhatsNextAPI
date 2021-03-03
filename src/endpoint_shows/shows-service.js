@@ -27,6 +27,14 @@ const showsService = {
             )
     },
 
+    getShowById(knex, show_id) {
+        return knex
+            .from('whats_next_shows')
+            .select('*')
+            .where('id', show_id)
+            .first()
+    },
+
     insertShow(knex, newShow) {
         return knex
             .insert(newShow)
@@ -37,7 +45,7 @@ const showsService = {
             })
     },
 
-    
+
 }
 
 module.exports = showsService;

@@ -137,6 +137,17 @@ function makeNewWatchedShowObject(users, shows) {
     }
 }
 
+
+function restartCounter(db, table) {
+    return db.transaction(trx => 
+        trx.raw(
+            `SELECT 
+                setval(\'${table}_id_seq\', (SELECT MAX(id) from "${table}"));
+            `
+        )    
+    )
+}
+
 function cleanTables(db) {
     return db.transaction(trx => 
         trx.raw(
@@ -175,5 +186,6 @@ module.exports = {
     cleanTables,
     serializeShowData,
     makeNewToWatchShowObject,
-    makeNewWatchedShowObject
+    makeNewWatchedShowObject,
+    restartCounter
 }

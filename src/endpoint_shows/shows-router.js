@@ -21,8 +21,6 @@ showsRouter
         .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        console.log('in shows router, request body is:')
-        console.log(req.body)
         const { title, service, genre, watched, priority, completed, rating } = req.body;
         // want to keep thinking about what is "required", and at what stage...
         //   ...e.g., will I fill in default values in the front-end app if not supplied by user,
@@ -62,6 +60,32 @@ showsRouter
                     .json(showsService.serializeShowData(show))
             })
             .catch(next)
+    });
+
+showsRouter
+    .route('/:showId')
+    // .all(JwtService.requireAuth)
+    .all( (req, res, next) => {
+        showsService.getShowById(
+            req.app.get('db'),
+            req.params.showId
+        )
+        .then(show => {
+            if (!show) {
+                return res
+                    .status(404)
+                    .json({
+                        error: {message: `The show with ID '${req.params.showId}' could not be found.`}
+                    })
+            }
+            res.show = show;
+            next()
+        })
+    })
+    .get( (req, res, next) => {
+        res.json(
+            showsService.serializeShowData(res.show)
+        )
     })
 
 module.exports = showsRouter;

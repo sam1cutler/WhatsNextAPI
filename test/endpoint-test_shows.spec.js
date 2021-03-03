@@ -69,13 +69,23 @@ describe('Shows Endpoints', function() {
                 return db
                     .into('whats_next_shows')
                     .insert(testShows)
+                    // reset seq counter to latest PK number
+                    .then( () => {
+                        return db.max('id').from('whats_next_shows')
+                    })
+                    .then( (maxId) => {
+                        return db.raw(
+                            `ALTER SEQUENCE 
+                                whats_next_shows_id_seq 
+                                RESTART WITH ${maxId[0].max+1};
+                            `
+                        )
+                    })
             })
 
-            it(`i) responds with 201 and adds the appropriate new to-watch show to the database`, () => {
+            it(`i) responds with 201 and adds the appropriate new _to-watch_ show to the database`, () => {
                 const activeUser = testUsers[2]
                 const newShow = helpers.makeNewToWatchShowObject(testUsers, testShows);
-                console.log('in bad test')
-                console.log(newShow);
                 
                 return supertest(app)
                     .post('/api/shows')
@@ -86,6 +96,47 @@ describe('Shows Endpoints', function() {
                         expect(res.body.title).to.eql(newShow.title)
                     })
             })
+
+            it(`ii) responds with 201 and adds the appropriate new _watched_ show to the database`, () => {
+                const activeUser = testUsers[2]
+                const newShow = helpers.makeNewWatchedShowObject(testUsers, testShows);
+                
+                return supertest(app)
+                    .post('/api/shows')
+                    // eventually put authorization header here
+                    .send(newShow)
+                    .expect(201)
+                    .expect(res => {
+                        expect(res.body.title).to.eql(newShow.title)
+                    })
+            })
+
+        })
+    })
+
+    describe(`3) GET /api/shows/:showId`, () => {
+        context(`A) Given shows in the database`, () => {
+            beforeEach('insert users', () => {
+                return db
+                    .into('whats_next_users')
+                    .insert(testUsers)
+            })
+            beforeEach('insert hikes', () => {
+                return db
+                    .into('whats_next_shows')
+                    .insert(testShows)
+            })
+
+            it(`responds with 200 and the requested show`, () => {
+                const desiredShowId = 1
+                // const activeUser = testUsers[0] // implement after auth (including matching user with show)
+                const expectedShow = helpers.serializeShowData(testShows[desiredShowId-1]);
+
+                return supertest(app)
+                    .get(`/api/shows/${desiredShowId}`)
+                    // eventually put authorization header here
+                    .expect(200, expectedShow)
+            });
 
         })
     })
