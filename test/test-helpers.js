@@ -1,42 +1,46 @@
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const xss = require('xss');
 
 function makeUsersArray() {
+
+    // all un-bcrypted passwords are "password", and
+    //    are here bcrypted with 12 saltRounds
+
     return [
         {
             id: 1,
             email: 'test1@test.com',
             display_name: 'test1',
-            password: 'password',
+            password: '$2a$12$jtXCLl3gBNYYvcoEhJBky.hqNxWMnAMeyWyYv7oYaK9hKCbSxrLEy',
             friends: '2 3 4'
         },
         {
             id: 2,
             email: 'test2@test.com',
             display_name: 'test2',
-            password: 'password',
+            password: '$2a$12$jtXCLl3gBNYYvcoEhJBky.hqNxWMnAMeyWyYv7oYaK9hKCbSxrLEy',
             friends: '1 3 4'
         },
         {
             id: 3,
             email: 'test3@test.com',
             display_name: 'test3',
-            password: 'password',
+            password: '$2a$12$jtXCLl3gBNYYvcoEhJBky.hqNxWMnAMeyWyYv7oYaK9hKCbSxrLEy',
             friends: '2 3 4'
         },
         {
             id: 4,
             email: 'test4@test.com',
             display_name: 'test4',
-            password: 'password',
+            password: '$2a$12$jtXCLl3gBNYYvcoEhJBky.hqNxWMnAMeyWyYv7oYaK9hKCbSxrLEy',
             friends: '2 3 4'
         },
         {
             id: 5,
             email: 'test5@test.com',
             display_name: 'test5',
-            password: 'password',
+            password: '$2a$12$jtXCLl3gBNYYvcoEhJBky.hqNxWMnAMeyWyYv7oYaK9hKCbSxrLEy',
             friends: '2 3 4'
         },
     ]
@@ -137,14 +141,15 @@ function makeNewWatchedShowObject(users, shows) {
     }
 }
 
-
-function restartCounter(db, table) {
-    return db.transaction(trx => 
-        trx.raw(
-            `SELECT 
-                setval(\'${table}_id_seq\', (SELECT MAX(id) from "${table}"));
-            `
-        )    
+function makeAuthToken(user, secret = process.env.JWT_SECRET) {
+    //console.log(`In test suite using ${process.env.JWT_SECRET}`)
+    return jwt.sign(
+        {user_id: user.id},
+        secret,
+        {
+            subject: user.email,
+            algorithm: 'HS256'
+        }
     )
 }
 
@@ -187,5 +192,5 @@ module.exports = {
     serializeShowData,
     makeNewToWatchShowObject,
     makeNewWatchedShowObject,
-    restartCounter
+    makeAuthToken
 }

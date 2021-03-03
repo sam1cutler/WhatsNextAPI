@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const showsService = require('./shows-service');
+const JwtService = require('../middleware/jwt-auth');
 
 
 const showsRouter = express.Router();
@@ -64,7 +65,7 @@ showsRouter
 
 showsRouter
     .route('/:showId')
-    // .all(JwtService.requireAuth)
+    .all(JwtService.requireAuth)
     .all( (req, res, next) => {
         showsService.getShowById(
             req.app.get('db'),

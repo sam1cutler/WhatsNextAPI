@@ -12,8 +12,6 @@ describe('Shows Endpoints', function() {
     // create core test data corpus
     const { testUsers, testShows } = helpers.makeShowsFixtures();
 
-    //console.log(testShows);
-
     before('Make knex instance', () => {
         db = knex({
             client: 'pg',
@@ -42,7 +40,7 @@ describe('Shows Endpoints', function() {
             })
 
             it(`responds with 200 and all the shows`, () => {
-                const activeUser = testUsers[0]
+                const activeUser = testUsers[0];
                 const expectedShowsTemp = testShows.filter(show => 
                     show.user_id === activeUser.id
                 );
@@ -129,12 +127,13 @@ describe('Shows Endpoints', function() {
 
             it(`responds with 200 and the requested show`, () => {
                 const desiredShowId = 1
-                // const activeUser = testUsers[0] // implement after auth (including matching user with show)
+                const activeUser = testUsers[0]
+                const authToken = helpers.makeAuthToken(activeUser);
                 const expectedShow = helpers.serializeShowData(testShows[desiredShowId-1]);
 
                 return supertest(app)
                     .get(`/api/shows/${desiredShowId}`)
-                    // eventually put authorization header here
+                    .set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShow)
             });
 

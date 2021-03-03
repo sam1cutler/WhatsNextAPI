@@ -5,7 +5,7 @@ const authRouter = express.Router();
 const jsonParser = express.json();
 
 authRouter
-    .route('/login')
+    .route('/')
     .post(jsonParser, (req, res, next) => {
         const { email, password } = req.body;
         const loginUser = { email, password };
@@ -37,7 +37,7 @@ authRouter
 
                 // if user exists, check that password in req.body
                 //  matches DB-stored bcrypted password for the verified user
-                return AuthService.comparePasswords(loginUser.password, dbUser.password)
+                return AuthService.comparePasswords(loginUser.password, verifiedUser.password)
                     .then(comparisonResult => {
                         if (!comparisonResult) {
                             return res
