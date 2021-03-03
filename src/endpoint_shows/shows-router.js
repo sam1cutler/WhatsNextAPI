@@ -7,21 +7,31 @@ const JwtService = require('../middleware/jwt-auth');
 const showsRouter = express.Router();
 const jsonParser = express.json();
 
+// public GET /shows requests need userId from req URL
 showsRouter
-    .route('/')
+    .route('/:userId')
     .get( (req, res, next) => {
         console.log('attempting GET request of shows endpoint')
+        console.log(req.params.userId)
+
         showsService.getAllShows(
             req.app.get('db'),
-            1
+            req.params.userId
         )
         .then(shows => {
             //console.log(shows)
             res.json(shows.map(showsService.serializeShowData))
         })
         .catch(next)
-    })
+    });
+
+// private POST /shows gets userId from user's authToken
+showsRouter
+    .route('/')
+    .all(JwtService.requireAuth)
     .post(jsonParser, (req, res, next) => {
+        console.log('Doing the Post')
+
         const { title, service, genre, watched, priority, completed, rating } = req.body;
         // want to keep thinking about what is "required", and at what stage...
         //   ...e.g., will I fill in default values in the front-end app if not supplied by user,
@@ -39,8 +49,7 @@ showsRouter
         }
 
         const newShow = {
-            // user_id: req.user.id
-            user_id: 2,
+            user_id: req.user.id,
             title,
             service,
             genre,
@@ -63,9 +72,9 @@ showsRouter
             .catch(next)
     });
 
+// public GET /shows/:userId/:showId requests need userId from req URL
 showsRouter
-    .route('/:showId')
-    .all(JwtService.requireAuth)
+    .route('/:userId/:showId')
     .all( (req, res, next) => {
         showsService.getShowById(
             req.app.get('db'),
@@ -88,5 +97,28 @@ showsRouter
             showsService.serializeShowData(res.show)
         )
     })
+
+// private PATCH and DELETE /shows/:showId requests get userId from authToken
+showsRouter
+    .route('/:showId')
+    .all(JwtService.requireAuth)
+    .all( (req, res, next) => {
+        showsService.getShowById(
+            req.app.get('db'),
+            req.params.showId
+        )
+        .then(show => {
+            if (!show) {
+                return res
+                    .status(404)
+                    .json({
+                        error: {message: `The show with ID '${req.params.showId}' could not be found.`}
+                    })
+            }
+            res.show = show;
+            next()
+        })
+    })
+    
 
 module.exports = showsRouter;

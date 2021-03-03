@@ -36,7 +36,7 @@ describe('Auth Endpoint', function() {
                     .insert(testUsers)
             })
 
-            it(`responds to proper request with 200 and proper authToken`, () => {
+            it.skip(`responds to proper request with 200 and proper authToken`, () => {
                 // Define active user
                 const activeUser = testUsers[0];
 

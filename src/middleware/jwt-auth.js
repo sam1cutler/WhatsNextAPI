@@ -4,6 +4,8 @@ const AuthService = require("../endpoint_auth/auth-service");
 const JwtService = {
 
     requireAuth(req, res, next) {
+
+        console.log('Running requireAuth')
         // Get AuthToken from Auth header of 
         //    client's request to protected endpoint
         const AuthToken = req.get('Authorization') || '';

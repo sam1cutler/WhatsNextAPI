@@ -26,7 +26,7 @@ describe('Shows Endpoints', function() {
 
     afterEach('Cleanup', () => helpers.cleanTables(db) );
 
-    describe(`1) GET /api/shows`, () => {
+    describe(`1) GET /api/shows/:userId`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -48,7 +48,7 @@ describe('Shows Endpoints', function() {
                     helpers.serializeShowData(show)
                 );
                 return supertest(app)
-                    .get('/api/shows')
+                    .get('/api/shows/1')
                     // eventually put authorization header here
                     .expect(200, expectedShows)
             })
@@ -84,10 +84,11 @@ describe('Shows Endpoints', function() {
             it(`i) responds with 201 and adds the appropriate new _to-watch_ show to the database`, () => {
                 const activeUser = testUsers[2]
                 const newShow = helpers.makeNewToWatchShowObject(testUsers, testShows);
+                const authToken = helpers.makeAuthToken(activeUser);
                 
                 return supertest(app)
                     .post('/api/shows')
-                    // eventually put authorization header here
+                    .set('Authorization', `bearer ${authToken}`)
                     .send(newShow)
                     .expect(201)
                     .expect(res => {
@@ -98,10 +99,11 @@ describe('Shows Endpoints', function() {
             it(`ii) responds with 201 and adds the appropriate new _watched_ show to the database`, () => {
                 const activeUser = testUsers[2]
                 const newShow = helpers.makeNewWatchedShowObject(testUsers, testShows);
+                const authToken = helpers.makeAuthToken(activeUser);
                 
                 return supertest(app)
                     .post('/api/shows')
-                    // eventually put authorization header here
+                    .set('Authorization', `bearer ${authToken}`)
                     .send(newShow)
                     .expect(201)
                     .expect(res => {
@@ -132,8 +134,8 @@ describe('Shows Endpoints', function() {
                 const expectedShow = helpers.serializeShowData(testShows[desiredShowId-1]);
 
                 return supertest(app)
-                    .get(`/api/shows/${desiredShowId}`)
-                    .set('Authorization', `bearer ${authToken}`)
+                    .get(`/api/shows/1/${desiredShowId}`)
+                    //.set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShow)
             });
 
