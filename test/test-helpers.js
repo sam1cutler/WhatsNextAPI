@@ -184,6 +184,50 @@ function serializeShowData(show) {
     }
 }
 
+function serializeUser(user, user_id) {
+    
+    return {
+        id: user_id,
+        email: user.email,
+        display_name: user.display_name,
+        password: '$2a$12$Xtwo0LYRzdLreJokuawKe.X8GOITxl6Xq80WKMKhjWhLmEZLUzPOG',
+        friends: ""
+    }
+    
+    /*
+    bcrypt.hash(user.password, 12)
+        .then(hashedPassword => {
+            return { 
+                id: user_id,
+                email: user.email,
+                display_name: user.display_name,
+                password: hashedPassword,
+                friends: null
+            }
+        })
+    */
+    /*
+    console.log('running serializeUser helper fxn')
+    console.log(user)
+    function makeHashedPassword(inputPassword) {
+        console.log(`ABout to hash ${inputPassword}`)
+        bcrypt.hash(inputPassword, 12)
+            .then(hashedPassword => {
+                console.log(hashedPassword)
+                return hashedPassword
+            })
+    }
+    const hashedPassword = makeHashedPassword(user.password);
+    return { 
+        id: user_id,
+        email: user.email,
+        display_name: user.display_name,
+        password: hashedPassword,
+        friends: null
+    }
+    */
+}
+
 module.exports = {
     makeUsersArray,
     makeShowsArray,
@@ -192,5 +236,6 @@ module.exports = {
     serializeShowData,
     makeNewToWatchShowObject,
     makeNewWatchedShowObject,
-    makeAuthToken
+    makeAuthToken,
+    serializeUser
 }

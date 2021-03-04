@@ -3,7 +3,6 @@ const path = require('path');
 const showsService = require('./shows-service');
 const JwtService = require('../middleware/jwt-auth');
 
-
 const showsRouter = express.Router();
 const jsonParser = express.json();
 

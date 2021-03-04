@@ -16,7 +16,6 @@ const AuthService = {
     },
 
     comparePasswords(password, hash) {
-        console.log('In auth-service, comparing passwords')
         return bcrypt.compare(
             password,
             hash
