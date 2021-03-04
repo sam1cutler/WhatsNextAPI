@@ -26,7 +26,7 @@ describe('Shows Endpoints', function() {
 
     afterEach('Cleanup', () => helpers.cleanTables(db) );
 
-    describe(`1) GET /api/shows/:userId`, () => {
+    describe(`1) GET /api/shows/get/:userId`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -48,7 +48,7 @@ describe('Shows Endpoints', function() {
                     helpers.serializeShowData(show)
                 );
                 return supertest(app)
-                    .get('/api/shows/1')
+                    .get('/api/shows/get/1')
                     // eventually put authorization header here
                     .expect(200, expectedShows)
             })
@@ -114,7 +114,7 @@ describe('Shows Endpoints', function() {
         })
     })
 
-    describe(`3) GET /api/shows/:showId`, () => {
+    describe(`3) GET /api/shows/get/:userId:showId`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -134,7 +134,7 @@ describe('Shows Endpoints', function() {
                 const expectedShow = helpers.serializeShowData(testShows[desiredShowId-1]);
 
                 return supertest(app)
-                    .get(`/api/shows/1/${desiredShowId}`)
+                    .get(`/api/shows/get/1/${desiredShowId}`)
                     //.set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShow)
             });
@@ -142,7 +142,7 @@ describe('Shows Endpoints', function() {
         })
     })
 
-    describe.skip(`4) DELETE /api/shows/:showId`, () => {
+    describe(`4) DELETE /api/shows/:showId`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -153,20 +153,6 @@ describe('Shows Endpoints', function() {
                 return db
                     .into('whats_next_shows')
                     .insert(testShows)
-                    /*
-                    // reset seq counter to latest PK number
-                    .then( () => {
-                        return db.max('id').from('whats_next_shows')
-                    })
-                    .then( (maxId) => {
-                        return db.raw(
-                            `ALTER SEQUENCE 
-                                whats_next_shows_id_seq 
-                                RESTART WITH ${maxId[0].max+1};
-                            `
-                        )
-                    })
-                    */
             })
 
             it(`i) responds with 204 and deletes the requested show`, () => {
@@ -174,6 +160,7 @@ describe('Shows Endpoints', function() {
                 const deleteShowTargetId = 2;
                 const authToken = helpers.makeAuthToken(activeUser);
 
+                // Generate expected shows list, having removed deleted show
                 const expectedShows1 = testShows.filter(show => 
                     show.user_id === activeUser.id
                 );
@@ -190,14 +177,49 @@ describe('Shows Endpoints', function() {
                     .expect(204)
                     .then( () => {
                         return supertest(app)
-                            .get(`/api/shows/1`)
-                            // PICK BACK UP HERE
+                            .get(`/api/shows/get/1`)
+                            .expect(200, expectedShows)
                     })
-                    /*
-                    .expect(res => {
-                        expect(res.body.title).to.eql(newShow.title)
+            })
+
+
+        })
+    })
+
+    describe(`5) PATCH /api/shows/:showId`, () => {
+        context(`A) Given shows in the database`, () => {
+            beforeEach('insert users', () => {
+                return db
+                    .into('whats_next_users')
+                    .insert(testUsers)
+            })
+            beforeEach('insert shows', () => {
+                return db
+                    .into('whats_next_shows')
+                    .insert(testShows)
+            })
+
+            it(`i) responds with 204 and updates the requested show`, () => {
+                const activeUser = testUsers[0];
+                const patchShowTargetId = 2;
+                const newShowInfo = {
+                    title: 'Updated title'
+                }
+                const authToken = helpers.makeAuthToken(activeUser);
+
+                return supertest(app)
+                    .patch(`/api/shows/${patchShowTargetId}`)
+                    .set('Authorization', `bearer ${authToken}`)
+                    .send(newShowInfo)
+                    .expect(204)
+                    .then( () => {
+                        return supertest(app)
+                            .get(`/api/shows/get/1/${patchShowTargetId}`)
+                            .expect(200)
+                            .then( (res) => {
+                                expect(res.body.title).to.eql(newShowInfo.title)
+                            })
                     })
-                    */
             })
 
 

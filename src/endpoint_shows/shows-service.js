@@ -52,6 +52,12 @@ const showsService = {
             .delete()
     },
 
+    updateShow(knex, id, newShowInfo) {
+        return knex
+            .from('whats_next_shows')
+            .where( {id} )
+            .update(newShowInfo)
+    },
 
 }
 
