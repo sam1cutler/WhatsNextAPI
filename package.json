@@ -15,7 +15,10 @@
     "postdeploy": "npm run migrate:production"
   },
   "keywords": [],
-  "author": "",
+  "engines": {
+    "node": "14.15.1"
+  },
+  "author": "Sam Cutler",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

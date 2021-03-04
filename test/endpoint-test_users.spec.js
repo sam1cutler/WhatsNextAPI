@@ -1,7 +1,6 @@
 const knex = require('knex');
 const supertest = require('supertest');
 const app = require('../src/app');
-const UsersService = require('../src/endpoint_users/users-service');
 const helpers = require('./test-helpers');
 
 describe('Users Endpoints', () => {
