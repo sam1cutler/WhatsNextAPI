@@ -22,7 +22,7 @@ const UsersService = {
         return knex
             .from('whats_next_users')
             .select('*')
-            .where( { id } ) // I think this will work? Start here if need to troubleshoot
+            .where( { id } )
             .first()
     },
     insertUser(knex, newUser) {
@@ -69,9 +69,9 @@ const UsersService = {
     checkForUserWithEmail(knex, email) {
         return knex
             .from('whats_next_users')
-            .where( {email } )
+            .where( { email } )
             .first()
-            .then(user => !!user)
+            .then(user => user)
     }
 }
 

@@ -10,6 +10,7 @@ const { NODE_ENV } = require('./config');
 const showsRouter = require('./endpoint_shows/shows-router');
 const usersRouter = require('./endpoint_users/users-router');
 const authRouter = require('./endpoint_auth/auth-router');
+const friendsRouter = require('./endpoint_friends/friends-router');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/api/', (req, res) => {
 app.use('/api/shows', showsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/friends', friendsRouter);
 
 app.use((error, req, res, next) => {
     let response
