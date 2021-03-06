@@ -71,10 +71,6 @@ describe('Users Endpoints', () => {
                     display_name: 'test6',
                     password: 'aBaB1!1!'
                 }
-                // * Note: hard-coding new user_id for new user here; 
-                //    --> if alter size of testUsers array --> change this value
-                const expectedNewUser = helpers.serializeUser(newUser, 6);
-                testUsers.push(expectedNewUser);
 
                 return supertest(app)
                     .post('/api/users')
@@ -83,10 +79,21 @@ describe('Users Endpoints', () => {
                     /*
                     .then( () => {
                         return supertest(app)
-                            .get('/api/users')
-                            .expect(200, testUsers)
+                            .get('/api/users/get/6')
+                            .expect(200)
+                            .then( (response) => {
+                                response.body
+                                //bcrypt.compare(plaintextPw, response.body.pw) --> returns true
+                                return bcrypt.compare(
+                                    newUser.password, response.body.password
+                                )
+                                    .then(answer => {
+
+                                    })
+                            })
                     })
                     */
+                    
                     
             })
         })

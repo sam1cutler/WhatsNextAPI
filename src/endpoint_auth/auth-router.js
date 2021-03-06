@@ -5,7 +5,7 @@ const authRouter = express.Router();
 const jsonParser = express.json();
 
 authRouter
-    .route('/')
+    .route('/login')
     .post(jsonParser, (req, res, next) => {
         const { email, password } = req.body;
         const loginUser = { email, password };
@@ -53,7 +53,8 @@ authRouter
                         const payload = { user_id: verifiedUser.id };
                         const authToken = AuthService.createJwt(sub, payload);
                         res.send({
-                            authToken
+                            authToken,
+                            user_id: verifiedUser.id
                         })
                     })
 

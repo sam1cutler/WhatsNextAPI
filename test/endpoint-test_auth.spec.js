@@ -28,7 +28,7 @@ describe('Auth Endpoint', function() {
 
     afterEach('Cleanup', () => helpers.cleanTables(db) );
 
-    describe(`POST /api/auth`, () => {
+    describe(`POST /api/auth/login`, () => {
         context(`A) Given users in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -36,7 +36,7 @@ describe('Auth Endpoint', function() {
                     .insert(testUsers)
             })
 
-            it.skip(`responds to proper request with 200 and proper authToken`, () => {
+            it(`responds to proper request with 200 and proper authToken`, () => {
                 // Define active user
                 const activeUser = testUsers[0];
 
@@ -51,7 +51,7 @@ describe('Auth Endpoint', function() {
 
                 // Make the request
                 return supertest(app)
-                    .post('/api/auth')
+                    .post('/api/auth/login')
                     .send(loginInfo)
                     .expect(200)
                     .expect(res => {
@@ -60,7 +60,7 @@ describe('Auth Endpoint', function() {
 
             })
 
-            it.skip(`responds to request with wrong password with 400 and proper error message`, () => {
+            it(`responds to request with wrong password with 400 and proper error message`, () => {
                 // Define active user
                 const activeUser = testUsers[0];
 
@@ -72,7 +72,7 @@ describe('Auth Endpoint', function() {
 
                 // Make the request
                 return supertest(app)
-                    .post('/api/auth')
+                    .post('/api/auth/login')
                     .send(loginInfo)
                     .expect(400)
                     .expect(res => {

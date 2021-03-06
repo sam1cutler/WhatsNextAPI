@@ -142,7 +142,7 @@ function makeNewWatchedShowObject(users, shows) {
 }
 
 function makeAuthToken(user, secret = process.env.JWT_SECRET) {
-    //console.log(`In test suite using ${process.env.JWT_SECRET}`)
+    
     return jwt.sign(
         {user_id: user.id},
         secret,
@@ -186,6 +186,7 @@ function serializeShowData(show) {
 
 function serializeUser(user, user_id) {
     
+    /*
     return {
         id: user_id,
         email: user.email,
@@ -193,8 +194,8 @@ function serializeUser(user, user_id) {
         password: '$2a$12$Xtwo0LYRzdLreJokuawKe.X8GOITxl6Xq80WKMKhjWhLmEZLUzPOG',
         friends: ""
     }
+    */
     
-    /*
     bcrypt.hash(user.password, 12)
         .then(hashedPassword => {
             return { 
@@ -205,8 +206,8 @@ function serializeUser(user, user_id) {
                 friends: null
             }
         })
-    */
-    /*
+    
+        /*
     console.log('running serializeUser helper fxn')
     console.log(user)
     function makeHashedPassword(inputPassword) {
