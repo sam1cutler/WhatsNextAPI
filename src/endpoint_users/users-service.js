@@ -10,7 +10,13 @@ const UsersService = {
             email: xss(user.email),
             display_name: xss(user.display_name),
             password: xss(user.password),
-            friends: xss(user.friends)
+        }
+    },
+    serializeUserPublic(user) {
+        return {
+            id: user.id,
+            email: xss(user.email),
+            display_name: xss(user.display_name),
         }
     },
     getAllUsers(knex) {

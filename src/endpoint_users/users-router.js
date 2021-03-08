@@ -174,4 +174,23 @@ usersRouter
                 .catch(next)
         })
 
+usersRouter
+    .route('/:userId/public')
+    .get( (req, res, next) => {
+        UsersService.getUserById(
+            req.app.get('db'),
+            req.params.userId
+        )
+            .then(user => {
+                if (!user) {
+                    return res
+                        .status(404)
+                        .json({
+                            error: `The user with ID '${req.params.userId}' could not be found.`
+                        })
+                }
+                res.json(UsersService.serializeUserPublic(user))
+            })
+    })
+
 module.exports = usersRouter;

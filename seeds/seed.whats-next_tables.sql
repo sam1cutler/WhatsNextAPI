@@ -11,7 +11,7 @@ INSERT INTO whats_next_users
 VALUES
     ('jason@gmail.com', 'Jason', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
     ('johanna@gmail.com', 'Jo', '$2a$12$k2F2.ERE/Pd4J77D.TADeunrmQiLnxXGw2eBdOHVHiIQriGQ/DRdy'),
-    ('monty@gmail.com', 'MTO', '$2a$12$w.dXgpN2C/3JtjfKeYLfqus7OKmybMB.EEOBRIAJHIBRHLESpuzEm'),
+    ('monty@gmail.com', 'Monty', '$2a$12$w.dXgpN2C/3JtjfKeYLfqus7OKmybMB.EEOBRIAJHIBRHLESpuzEm'),
     ('jeremy@gmail.com', 'Jeremy', '$2a$12$3m0jbQAs6HH1oZx1.M8NvOTrHk6W1YAvCF8p.wy.htYRCwyUwfW5.'),
     ('margalit@gmail.com', 'Margalit', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
     ('arielle@yahoo.com', 'Ari', '$2a$12$Jvc0qOjbZiCTwxrtEjyKReDZ77MD9dzUefHdwo9D0gxd5sl2DUEHW'),
@@ -20,6 +20,116 @@ VALUES
 INSERT INTO whats_next_shows
     (user_id, title, service, genre, watched, priority, completed, rating)
 VALUES
+    (
+        1,
+        'The Great British Bakeoff',
+        'Netflix',
+        'Cooking',
+        true,
+        null,
+        '2020-12-01T00:00:00.000Z',
+        4
+    ),
+    (
+        1,
+        'The Watchmen',
+        'HBO Max',
+        'SciFi',
+        true,
+        null,
+        '2020-10-01T00:00:00.000Z',
+        5
+    ),
+    (
+        1,
+        'Atlanta',
+        'Hulu',
+        'Drama',
+        false,
+        1,
+        null,
+        null
+    ),
+    (
+        1,
+        'Trapped',
+        'Amazon Prime',
+        'Crime',
+        false,
+        2,
+        null,
+        null
+    ),
+    (
+        1,
+        'The Expanse',
+        'Amazon Prime',
+        'SciFi',
+        false,
+        3,
+        null,
+        null
+    ),
+    (
+        1,
+        'Ted Lasso',
+        'Apple TV',
+        'Comedy',
+        true,
+        null,
+        '2021-01-01T00:00:00.000Z',
+        5
+    ),
+    (
+        1,
+        'Star Trek: TNG',
+        'Netflix',
+        'SciFi',
+        false,
+        4,
+        null,
+        null
+    ),
+    (
+        1,
+        'Mindhunter',
+        'Netflix',
+        'Crime',
+        true,
+        null,
+        '2020-09-01T00:00:00.000Z',
+        3
+    ),
+    (
+        1,
+        'Altered Carbon',
+        'Netflix',
+        'SciFi',
+        true,
+        null,
+        '2020-07-01T00:00:00.000Z',
+        2
+    ),
+    (
+        1,
+        'Schitt''s Creek',
+        'Netflix',
+        'Comedy',
+        true,
+        null,
+        '2021-02-28T00:00:00.000Z',
+        5
+    ),
+    (
+        1,
+        'Downton Abbey',
+        'Amazon Prime',
+        'Drama',
+        false,
+        8,
+        null,
+        null
+    ),
     (
         2,
         'Queen''s Gambit',
@@ -347,7 +457,7 @@ VALUES
     (1, 2, 'Jo'),
     (1, 7, 'Susan'),
     (1, 5, 'Margalit'),
-    (2, 3, 'MTO'),
+    (2, 3, 'Monty'),
     (2, 6, 'Ari'),
     (3, 2, 'Jo'),
     (5, 1, 'Jason'),
