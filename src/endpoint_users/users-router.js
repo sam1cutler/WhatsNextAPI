@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const UsersService = require('./users-service');
+const showsService = require('../endpoint_shows/shows-service');
 const JwtService = require('../middleware/jwt-auth');
 
 const usersRouter = express.Router();
@@ -175,7 +176,7 @@ usersRouter
         })
 
 usersRouter
-    .route('/:userId/public')
+    .route('/:userId/public/info')
     .get( (req, res, next) => {
         UsersService.getUserById(
             req.app.get('db'),
@@ -192,5 +193,20 @@ usersRouter
                 res.json(UsersService.serializeUserPublic(user))
             })
     })
+
+
+usersRouter
+    .route('/:userId/public/shows')
+    .get( (req, res, next) => {
+        showsService.getAllShows(
+            req.app.get('db'),
+            req.params.userId
+        )
+            .then(shows => {
+                res.json(shows.map(showsService.serializeShowData))
+            })
+            .catch(next)
+    })
+
 
 module.exports = usersRouter;

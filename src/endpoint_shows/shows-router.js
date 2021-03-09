@@ -6,24 +6,19 @@ const JwtService = require('../middleware/jwt-auth');
 const showsRouter = express.Router();
 const jsonParser = express.json();
 
-// public GET /shows/get/:userId requests need userId from req URL
 showsRouter
-    .route('/get/:userId')
+    .route('/')
+    .all(JwtService.requireAuth)
     .get( (req, res, next) => {
         showsService.getAllShows(
             req.app.get('db'),
-            req.params.userId
+            req.user.id
         )
         .then(shows => {
             res.json(shows.map(showsService.serializeShowData))
         })
         .catch(next)
-    });
-
-// private POST /shows requests pull userId from user's authToken
-showsRouter
-    .route('/')
-    .all(JwtService.requireAuth)
+    })
     .post(jsonParser, (req, res, next) => {
 
         const { title, service, genre, watched, priority, completed, rating } = req.body;
@@ -60,49 +55,13 @@ showsRouter
             .then(show => {
                 res
                     .status(201)
-                    .location(path.posix.join(req.originalUrl, `/${show.id}`))
+                    .location(path.posix.join(req.originalUrl, `/get/${show.id}`))
                     .json(showsService.serializeShowData(show))
             })
             .catch(next)
     });
+    
 
-// public GET /shows/get/:userId/:showId requests pull userId from req URL
-showsRouter
-    .route('/get/:userId/:showId')
-    .all( (req, res, next) => {
-        showsService.getShowById(
-            req.app.get('db'),
-            req.params.showId
-        )
-        .then(show => {
-            if (!show) {
-                return res
-                    .status(404)
-                    .json({
-                        error: {message: `The show with ID '${req.params.showId}' could not be found.`}
-                    })
-            }
-
-            // check that the show (which exists) is "owned" by the specific user
-            if (show.user_id !== parseInt(req.params.userId) ) {
-                return res
-                    .status(404)
-                    .json({
-                        error: { message: `Show #${req.params.showId} is not associated with this user's account.`}
-                    })
-            }
-
-            res.show = show;
-            next()
-        })
-    })
-    .get( (req, res, next) => {
-        res.json(
-            showsService.serializeShowData(res.show)
-        )
-    })
-
-// private PATCH and DELETE /shows/:showId requests pull userId from authToken
 showsRouter
     .route('/:showId')
     .all(JwtService.requireAuth)
@@ -133,6 +92,11 @@ showsRouter
             res.show = show;
             next()
         })
+    })
+    .get( (req, res, next) => {
+        res.json(
+            showsService.serializeShowData(res.show)
+        )
     })
     .delete( (req, res, next) => {
         showsService.deleteShow(
