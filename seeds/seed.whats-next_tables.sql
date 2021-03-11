@@ -9,13 +9,13 @@ TRUNCATE
 INSERT INTO whats_next_users
     (email, display_name, password)
 VALUES
-    ('jason@gmail.com', 'Jason', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
-    ('johanna@gmail.com', 'Jo', '$2a$12$k2F2.ERE/Pd4J77D.TADeunrmQiLnxXGw2eBdOHVHiIQriGQ/DRdy'),
-    ('monty@gmail.com', 'Monty', '$2a$12$w.dXgpN2C/3JtjfKeYLfqus7OKmybMB.EEOBRIAJHIBRHLESpuzEm'),
-    ('jeremy@gmail.com', 'Jeremy', '$2a$12$3m0jbQAs6HH1oZx1.M8NvOTrHk6W1YAvCF8p.wy.htYRCwyUwfW5.'),
-    ('margalit@gmail.com', 'Margalit', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
-    ('arielle@yahoo.com', 'Ari', '$2a$12$Jvc0qOjbZiCTwxrtEjyKReDZ77MD9dzUefHdwo9D0gxd5sl2DUEHW'),
-    ('susan@outlook.com', 'Susan', '$2a$12$N5TTbGvZlzh/lpj1PkoeJuGwGHcfAoNYdyfUvld4Z8poXs2N/sW1W');
+    ('bender@gmail.com', 'Bender', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
+    ('leela@gmail.com', 'Leela', '$2a$12$k2F2.ERE/Pd4J77D.TADeunrmQiLnxXGw2eBdOHVHiIQriGQ/DRdy'),
+    ('fry@gmail.com', 'Fry', '$2a$12$w.dXgpN2C/3JtjfKeYLfqus7OKmybMB.EEOBRIAJHIBRHLESpuzEm'),
+    ('hermes@gmail.com', 'Hermes', '$2a$12$3m0jbQAs6HH1oZx1.M8NvOTrHk6W1YAvCF8p.wy.htYRCwyUwfW5.'),
+    ('zoidberg@gmail.com', 'Zoidberg', '$2a$12$RMZQRtib0KWblIizPt5knuudCQ/xJWartO4wr0wVI9dF7P4tgX3ai'),
+    ('amy@yahoo.com', 'Amy', '$2a$12$Jvc0qOjbZiCTwxrtEjyKReDZ77MD9dzUefHdwo9D0gxd5sl2DUEHW'),
+    ('professor@outlook.com', 'Professor', '$2a$12$N5TTbGvZlzh/lpj1PkoeJuGwGHcfAoNYdyfUvld4Z8poXs2N/sW1W');
 
 INSERT INTO whats_next_shows
     (user_id, title, service, genre, watched, priority, completed, rating)
@@ -454,18 +454,21 @@ VALUES
 INSERT INTO whats_next_friends
     (source, recipient_id, recipient_name)
 VALUES
-    (1, 2, 'Jo'),
-    (1, 7, 'Susan'),
-    (1, 5, 'Margalit'),
-    (2, 3, 'Monty'),
-    (2, 6, 'Ari'),
-    (3, 2, 'Jo'),
-    (5, 1, 'Jason'),
-    (5, 6, 'Ari'),
-    (5, 7, 'Susan'),
-    (6, 5, 'Jeremy'),
-    (7, 1, 'Jason'),
-    (7, 5, 'Margalit'),
-    (7, 6, 'Ari');
+    (1, 2, 'Leela'),
+    (1, 7, 'Professor'),
+    (1, 5, 'Zoidberg'),
+    (1, 3, 'Fry'),
+    (2, 3, 'Fry'),
+    (2, 6, 'Amy'),
+    (3, 2, 'Leela'),
+    (4, 1, 'Bender'),
+    (4, 6, 'Amy'),
+    (5, 1, 'Bender'),
+    (5, 6, 'Amy'),
+    (5, 7, 'Professor'),
+    (6, 5, 'Hermes'),
+    (7, 1, 'Bender'),
+    (7, 5, 'Zoidberg'),
+    (7, 6, 'Amy');
 
 COMMIT;
