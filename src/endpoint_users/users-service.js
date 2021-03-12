@@ -70,12 +70,17 @@ const UsersService = {
     hashPassword(password) {
         return bcrypt.hash(password, 12)
     },
-    
-    // cleaning up syntax on this one, check if causes problems
     checkForUserWithEmail(knex, email) {
         return knex
             .from('whats_next_users')
             .where( { email } )
+            .first()
+            .then(user => user)
+    },
+    checkForUserWithDisplayName(knex, display_name) {
+        return knex
+            .from('whats_next_users')
+            .where( { display_name } )
             .first()
             .then(user => user)
     }

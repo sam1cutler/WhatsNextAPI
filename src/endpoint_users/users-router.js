@@ -41,8 +41,8 @@ usersRouter
             req.app.get('db'),
             email
         )
-            .then(dbHasUserWithEmail => {
-                if (dbHasUserWithEmail) {
+            .then(registeredUserWithEmail => {
+                if (registeredUserWithEmail) {
                     return res
                         .status(400)
                         .json({
@@ -50,29 +50,47 @@ usersRouter
                         })
                 }
 
-                const passwordError = UsersService.validatePassword(password);
+                // check whether display_name is taken
+                UsersService.checkForUserWithDisplayName(
+                    req.app.get('db'),
+                    display_name
+                )
+                    .then(registeredUserWithDisplayName => {
+                        if (registeredUserWithDisplayName) {
+                            return res
+                                .status(400)
+                                .json({
+                                    error: `Please choose another display name.`
+                                })
+                        }
 
-                if (passwordError) {
-                    return res
-                        .status(400)
-                        .json({
-                            error: passwordError
-                        })
-                }
+                        // Check for deficiencies in password
+                        const passwordError = UsersService.validatePassword(password);
 
-                return UsersService.hashPassword(password)
-                    .then(hashedPassword => {
-                        newUser['password'] = hashedPassword;
-                        return UsersService.insertUser(
-                            req.app.get('db'),
-                            newUser
-                        )
-                            .then(user => {
-                                res
-                                    .status(201)
-                                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                                    .json(UsersService.serializeUser(user))
+                        if (passwordError) {
+                            return res
+                                .status(400)
+                                .json({
+                                    error: passwordError
+                                })
+                        }
 
+                        // hash the password
+                        return UsersService.hashPassword(password)
+                            .then(hashedPassword => {
+                                newUser['password'] = hashedPassword;
+                                // insert the fully-validated new user
+                                return UsersService.insertUser(
+                                    req.app.get('db'),
+                                    newUser
+                                )
+                                    .then(user => {
+                                        res
+                                            .status(201)
+                                            .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                                            .json(UsersService.serializeUser(user))
+
+                                    })
                             })
                     })
             })
@@ -122,11 +140,6 @@ usersRouter
                 res
                     .status(204)
                     .end()
-                    /*
-                    .json({
-                        message: `You have successfully deleted the user associated with ${res.user.email}.`
-                    })
-                    */
             })
     })
     .patch(

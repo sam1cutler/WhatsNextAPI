@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 // require CLIENT_ORIGIN
 
-// require routers
+/*-- require routers --*/
 const showsRouter = require('./endpoint_shows/shows-router');
 const usersRouter = require('./endpoint_users/users-router');
 const authRouter = require('./endpoint_auth/auth-router');
@@ -26,7 +26,7 @@ app.get('/api/', (req, res) => {
     res.send(`Hello, What's Next? user!`);
 })
 
-// app.use routers
+/*-- app.use routers --*/
 app.use('/api/shows', showsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);

@@ -22,9 +22,7 @@ showsRouter
     .post(jsonParser, (req, res, next) => {
 
         const { title, service, genre, watched, priority, completed, rating } = req.body;
-        // want to keep thinking about what is "required", and at what stage...
-        //   ...e.g., will I fill in default values in the front-end app if not supplied by user,
-        //   or be okay with legit nulls for some values?
+        
         const requiredItems = { title, watched };
 
         for (const [key, value] of Object.entries(requiredItems)) {
@@ -55,7 +53,7 @@ showsRouter
             .then(show => {
                 res
                     .status(201)
-                    .location(path.posix.join(req.originalUrl, `/get/${show.id}`))
+                    .location(path.posix.join(req.originalUrl, `/${show.id}`))
                     .json(showsService.serializeShowData(show))
             })
             .catch(next)

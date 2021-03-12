@@ -26,7 +26,7 @@ describe('Shows Endpoints', function() {
 
     afterEach('Cleanup', () => helpers.cleanTables(db) );
 
-    describe(`1) GET /api/shows/get/:userId`, () => {
+    describe(`1) GET /api/shows/`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -47,12 +47,13 @@ describe('Shows Endpoints', function() {
                 const expectedShows = expectedShowsTemp.map(show => 
                     helpers.serializeShowData(show)
                 );
+                const authToken = helpers.makeAuthToken(activeUser);
+
                 return supertest(app)
-                    .get('/api/shows/get/1')
-                    // eventually put authorization header here
+                    .get('/api/shows/')
+                    .set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShows)
             })
-
         })
     })
 
@@ -110,11 +111,10 @@ describe('Shows Endpoints', function() {
                         expect(res.body.title).to.eql(newShow.title)
                     })
             })
-
         })
     })
 
-    describe(`3) GET /api/shows/get/:userId:showId`, () => {
+    describe(`3) GET /api/shows/:showId`, () => {
         context(`A) Given shows in the database`, () => {
             beforeEach('insert users', () => {
                 return db
@@ -134,8 +134,8 @@ describe('Shows Endpoints', function() {
                 const expectedShow = helpers.serializeShowData(testShows[desiredShowId-1]);
 
                 return supertest(app)
-                    .get(`/api/shows/get/1/${desiredShowId}`)
-                    //.set('Authorization', `bearer ${authToken}`)
+                    .get(`/api/shows/${desiredShowId}`)
+                    .set('Authorization', `bearer ${authToken}`)
                     .expect(200, expectedShow)
             });
 
@@ -177,7 +177,8 @@ describe('Shows Endpoints', function() {
                     .expect(204)
                     .then( () => {
                         return supertest(app)
-                            .get(`/api/shows/get/1`)
+                            .get(`/api/shows/`)
+                            .set('Authorization', `bearer ${authToken}`)
                             .expect(200, expectedShows)
                     })
             })
@@ -214,16 +215,14 @@ describe('Shows Endpoints', function() {
                     .expect(204)
                     .then( () => {
                         return supertest(app)
-                            .get(`/api/shows/get/1/${patchShowTargetId}`)
+                            .get(`/api/shows/${patchShowTargetId}`)
+                            .set('Authorization', `bearer ${authToken}`)
                             .expect(200)
                             .then( (res) => {
                                 expect(res.body.title).to.eql(newShowInfo.title)
                             })
                     })
             })
-
-
         })
     })
-
 })
