@@ -23,7 +23,7 @@ VALUES
     (
         1,
         'The Great British Bakeoff',
-        'Netflix',
+        'netflix',
         'Cooking',
         true,
         null,
@@ -33,7 +33,7 @@ VALUES
     (
         1,
         'The Watchmen',
-        'HBO Max',
+        'hbo',
         'SciFi',
         true,
         null,
@@ -43,7 +43,7 @@ VALUES
     (
         1,
         'Atlanta',
-        'Hulu',
+        'hulu',
         'Drama',
         false,
         1,
@@ -53,7 +53,7 @@ VALUES
     (
         1,
         'Trapped',
-        'Amazon Prime',
+        'amazon',
         'Crime',
         false,
         2,
@@ -63,7 +63,7 @@ VALUES
     (
         1,
         'The Expanse',
-        'Amazon Prime',
+        'amazon',
         'SciFi',
         false,
         3,
@@ -73,7 +73,7 @@ VALUES
     (
         1,
         'Ted Lasso',
-        'Apple TV',
+        'apple',
         'Comedy',
         true,
         null,
@@ -83,7 +83,7 @@ VALUES
     (
         1,
         'Star Trek: TNG',
-        'Netflix',
+        'netflix',
         'SciFi',
         false,
         4,
@@ -93,7 +93,7 @@ VALUES
     (
         1,
         'Mindhunter',
-        'Netflix',
+        'netflix',
         'Crime',
         true,
         null,
@@ -103,7 +103,7 @@ VALUES
     (
         1,
         'Altered Carbon',
-        'Netflix',
+        'netflix',
         'SciFi',
         true,
         null,
@@ -113,7 +113,7 @@ VALUES
     (
         1,
         'Schitt''s Creek',
-        'Netflix',
+        'netflix',
         'Comedy',
         true,
         null,
@@ -123,7 +123,7 @@ VALUES
     (
         1,
         'Downton Abbey',
-        'Amazon Prime',
+        'amazon',
         'Drama',
         false,
         8,
@@ -133,7 +133,7 @@ VALUES
     (
         2,
         'Queen''s Gambit',
-        'Netflix',
+        'netflix',
         'Drama',
         true,
         null,
@@ -143,7 +143,7 @@ VALUES
     (
         2,
         'The Watchmen',
-        'HBO Max',
+        'hbo',
         'SciFi',
         true,
         null,
@@ -152,9 +152,9 @@ VALUES
     ),
     (
         2,
-        'Atlanta',
-        'Hulu',
-        'Drama',
+        'The Mandalorian',
+        'disney',
+        'SciFi',
         false,
         1,
         null,
@@ -163,7 +163,7 @@ VALUES
     (
         2,
         'Trapped',
-        'Amazon Prime',
+        'amazon',
         'Crime',
         false,
         2,
@@ -173,7 +173,7 @@ VALUES
     (
         2,
         'The Expanse',
-        'Amazon Prime',
+        'amazon',
         'SciFi',
         false,
         3,
@@ -183,7 +183,7 @@ VALUES
     (
         2,
         'Ted Lasso',
-        'Apple TV',
+        'apple',
         'Comedy',
         true,
         null,
@@ -193,7 +193,7 @@ VALUES
     (
         2,
         'Star Trek: TNG',
-        'Netflix',
+        'netflix',
         'SciFi',
         false,
         4,
@@ -203,7 +203,7 @@ VALUES
     (
         2,
         'Mindhunter',
-        'Netflix',
+        'netflix',
         'Crime',
         true,
         null,
@@ -213,7 +213,7 @@ VALUES
     (
         2,
         'Altered Carbon',
-        'Netflix',
+        'netflix',
         'SciFi',
         true,
         null,
@@ -222,8 +222,8 @@ VALUES
     ),
     (
         2,
-        'Schitt''s Creek',
-        'Netflix',
+        'The Simpsons Season 7',
+        'other',
         'Comedy',
         true,
         null,
@@ -233,7 +233,7 @@ VALUES
     (
         2,
         'Downton Abbey',
-        'Amazon Prime',
+        'amazon',
         'Drama',
         false,
         8,
@@ -243,7 +243,7 @@ VALUES
     (
         3,
         'Queen''s Gambit',
-        'Netflix',
+        'netflix',
         'Drama',
         true,
         null,
@@ -253,7 +253,7 @@ VALUES
     (
         3,
         'The Watchmen',
-        'HBO Max',
+        'hbo',
         'SciFi',
         true,
         null,
@@ -263,7 +263,7 @@ VALUES
     (
         3,
         'Futurama',
-        'Hulu',
+        'hulu',
         'Comedy',
         false,
         1,
@@ -272,8 +272,8 @@ VALUES
     ),
     (
         3,
-        'Trapped',
-        'Amazon Prime',
+        'Broadchurch',
+        'amazon',
         'Crime',
         false,
         2,
@@ -283,7 +283,7 @@ VALUES
     (
         3,
         'The Expanse',
-        'Amazon Prime',
+        'amazon',
         'SciFi',
         false,
         3,
@@ -293,7 +293,7 @@ VALUES
     (
         3,
         'Ted Lasso',
-        'Apple TV',
+        'apple',
         'Comedy',
         true,
         null,
@@ -303,7 +303,7 @@ VALUES
     (
         3,
         'Star Trek: TNG',
-        'Netflix',
+        'netflix',
         'SciFi',
         false,
         4,
@@ -313,7 +313,7 @@ VALUES
     (
         3,
         'Mindhunter',
-        'Netflix',
+        'netflix',
         'Crime',
         true,
         null,
@@ -323,7 +323,7 @@ VALUES
     (
         3,
         'Altered Carbon',
-        'Netflix',
+        'netflix',
         'SciFi',
         true,
         null,
@@ -332,8 +332,8 @@ VALUES
     ),
     (
         3,
-        'Schitt''s Creek',
-        'Netflix',
+        '30 Rock',
+        'other',
         'Comedy',
         true,
         null,
@@ -343,7 +343,7 @@ VALUES
     (
         3,
         'Downton Abbey',
-        'Amazon Prime',
+        'amazon',
         'Drama',
         false,
         8,
@@ -352,8 +352,8 @@ VALUES
     ),
     (
         4,
-        'The Watchmen',
-        'HBO Max',
+        'The Mandalorian',
+        'disney',
         'SciFi',
         true,
         null,
@@ -363,7 +363,7 @@ VALUES
     (
         4,
         'Atlanta',
-        'Hulu',
+        'hulu',
         'Drama',
         false,
         1,
@@ -372,8 +372,8 @@ VALUES
     ),
     (
         4,
-        'Trapped',
-        'Amazon Prime',
+        'The Tunnel',
+        'amazon',
         'Crime',
         false,
         2,
@@ -383,7 +383,7 @@ VALUES
     (
         4,
         'The Expanse',
-        'Amazon Prime',
+        'amazon',
         'SciFi',
         false,
         3,
@@ -393,7 +393,7 @@ VALUES
     (
         4,
         'Ted Lasso',
-        'Apple TV',
+        'apple',
         'Comedy',
         true,
         null,
@@ -403,7 +403,7 @@ VALUES
     (
         4,
         'Star Trek: TNG',
-        'Netflix',
+        'netflix',
         'SciFi',
         false,
         4,
@@ -413,7 +413,7 @@ VALUES
     (
         4,
         'Mindhunter',
-        'Netflix',
+        'netflix',
         'Crime',
         true,
         null,
@@ -422,9 +422,9 @@ VALUES
     ),
     (
         4,
-        'Altered Carbon',
-        'Netflix',
-        'SciFi',
+        'The Witcher',
+        'netflix',
+        'Fantasy',
         true,
         null,
         '2020-07-01T00:00:00.000Z',
@@ -433,7 +433,7 @@ VALUES
     (
         4,
         'Schitt''s Creek',
-        'Netflix',
+        'netflix',
         'Comedy',
         true,
         null,
@@ -443,7 +443,7 @@ VALUES
     (
         4,
         'Downton Abbey',
-        'Amazon Prime',
+        'amazon',
         'Drama',
         false,
         8,
@@ -462,7 +462,9 @@ VALUES
     (2, 6, 'Amy'),
     (3, 2, 'Leela'),
     (4, 1, 'Bender'),
-    (4, 6, 'Amy'),
+    (4, 2, 'Leela'),
+    (4, 3, 'Fry'),
+    (4, 5, 'Zoidberg'),
     (5, 1, 'Bender'),
     (5, 6, 'Amy'),
     (5, 7, 'Professor'),

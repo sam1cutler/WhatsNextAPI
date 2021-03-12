@@ -57,24 +57,44 @@ friendsRouter
                         })
                 }
 
-                // once confirm user does exist, use that info to populate the appropriate DB call:
-                const newConnection = {
-                    source: req.user.id,
-                    recipient_id: userWithThatEmail.id,
-                    recipient_name: userWithThatEmail.display_name
-                }
-                
-                FriendsService.makeNewConnection(
+                // check that user isn't already friends with this person
+                FriendsService.getFriends(
                     req.app.get('db'),
-                    newConnection
+                    req.user.id
                 )
-                    .then(connection => {
-                        res
-                            .status(201)
-                            .location(path.posix.join(req.originalUrl, `/$${connection.id}`))
-                            .json(connection)
+                    .then(friendsList => {
+                        for (let i=0 ; i<friendsList.length ; i++) {
+                            if (userWithThatEmail.id === friendsList[i].recipient_id) {
+                                return res
+                                    .status(400)
+                                    .json({
+                                        error: `Already friends with the user with email address '${target_friend_email}'.`
+                                    })
+                            }
+                        }
+
+                        // once confirm user does exist + is not already a friend, 
+                        //    use that info to populate the appropriate DB call:
+                        const newConnection = {
+                            source: req.user.id,
+                            recipient_id: userWithThatEmail.id,
+                            recipient_name: userWithThatEmail.display_name
+                        }
+                        
+                        FriendsService.makeNewConnection(
+                            req.app.get('db'),
+                            newConnection
+                        )
+                            .then(connection => {
+                                res
+                                    .status(201)
+                                    .location(path.posix.join(req.originalUrl, `/$${connection.id}`))
+                                    .json(connection)
+                            })
+                            .catch(next)
                     })
-                    .catch(next)
+
+                
             })
     });
     
